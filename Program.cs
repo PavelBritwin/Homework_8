@@ -1,4 +1,4 @@
-﻿// Task54
+﻿// Task56
 Console.Clear();
 int[,] createAndShowArray(int raw, int column)
 {
@@ -25,24 +25,23 @@ void showArray(int[,] arr)
         Console.WriteLine();
     }
 }
-int[,] arr54 = createAndShowArray(5, 5);
-int changeElement = 0;
+int[,] arr56 = createAndShowArray(5, 5);
+int rowWithMinSum = 0;
+int sum = 0;
+int sumMin = 999;
+for (int i = 0; i < arr56.GetLength(0); i++)
 {
-    for (int i = 0; i < arr54.GetLength(0); i++)
+    for (int j = 0; j < arr56.GetLength(1); j++)
     {
-        for (int m = 0; m < arr54.GetLength(1); m++)
-        {
-            for (int j = 1; j < arr54.GetLength(1); j++)
+        sum += arr56[i,j];
+        if (j == arr56.GetLength(1) - 1)
+            if (sum < sumMin)
             {
-                if (arr54[i, j - 1] < arr54[i, j])
-                {
-                    changeElement = arr54[i, j - 1];
-                    arr54[i, j - 1] = arr54[i, j];
-                    arr54[i, j] = changeElement;
-                }
+                sumMin = sum;
+                rowWithMinSum = i + 1;
             }
-        }
     }
+    sum = 0;
 }
-Console.WriteLine();
-showArray(arr54);
+
+Console.WriteLine($"Строка {rowWithMinSum}, сумма элементов: {sumMin}");
