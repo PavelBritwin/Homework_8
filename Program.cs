@@ -1,47 +1,35 @@
-﻿// Task56
+﻿// Task58
 Console.Clear();
-int[,] createAndShowArray(int raw, int column)
+
+int[,] matrix1 = new int[2, 2] { { new Random().Next(1, 10), new Random().Next(1, 10) }, { new Random().Next(1, 10), new Random().Next(1, 10) } };
+int[,] matrix2 = new int[2, 2] { { new Random().Next(1, 10), new Random().Next(1, 10) }, { new Random().Next(1, 10), new Random().Next(1, 10) } };
+int[,] matrix3 = new int[2, 2] { { 1, 2 }, { 3, 4 } };
+int[,] matrix4 = new int[2, 2] { { 5, 6 }, { 7, 8 } };
+
+void printMatrix(int[,] m)
 {
-    int[,] array = new int[raw, column];
-    for (int i = 0; i < array.GetLength(0); i++)
+    for (int i = 0; i < 2; i++)
     {
-        for (int j = 0; j < array.GetLength(1); j++)
+        for (int j = 0; j < 2; j++)
         {
-            array[i, j] = new Random().Next(1, 10);
-            Console.Write($"{array[i, j]} ");
+            Console.Write($"{m[i,j]} ");
         }
         Console.WriteLine();
     }
-    return array;
-}
-void showArray(int[,] arr)
-{
-    for (int i = 0; i < arr.GetLength(0); i++)
-    {
-        for (int j = 0; j < arr.GetLength(1); j++)
-        {
-            Console.Write($"{arr[i, j]} ");
-        }
-        Console.WriteLine();
-    }
-}
-int[,] arr56 = createAndShowArray(5, 5);
-int rowWithMinSum = 0;
-int sum = 0;
-int sumMin = 999;
-for (int i = 0; i < arr56.GetLength(0); i++)
-{
-    for (int j = 0; j < arr56.GetLength(1); j++)
-    {
-        sum += arr56[i,j];
-        if (j == arr56.GetLength(1) - 1)
-            if (sum < sumMin)
-            {
-                sumMin = sum;
-                rowWithMinSum = i + 1;
-            }
-    }
-    sum = 0;
+    Console.WriteLine();
 }
 
-Console.WriteLine($"Строка {rowWithMinSum}, сумма элементов: {sumMin}");
+int[,] productMaxtix(int[,] m1, int[,] m2)
+{
+    return new int[2, 2]
+        {
+            {(m1[0,0] * m2[0,0] + m1[0,1] * m2[1,0]), (m1[0,0] * m2[0,1] + m1[0,1] * m2[1,1])},
+            {(m1[1,0] * m2[0,0] + m1[1,1] * m2[1,0]),(m1[1,0] * m2[0,1] + m1[1,1] * m2[1,1])}
+       };
+}
+
+
+printMatrix(matrix1);
+printMatrix(matrix2);
+printMatrix(productMaxtix(matrix1, matrix2));
+//printMatrix(productMaxtix(matrix3, matrix4));
