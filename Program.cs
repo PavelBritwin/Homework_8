@@ -1,35 +1,50 @@
-﻿// Task58
+﻿// Task60
 Console.Clear();
 
-int[,] matrix1 = new int[2, 2] { { new Random().Next(1, 10), new Random().Next(1, 10) }, { new Random().Next(1, 10), new Random().Next(1, 10) } };
-int[,] matrix2 = new int[2, 2] { { new Random().Next(1, 10), new Random().Next(1, 10) }, { new Random().Next(1, 10), new Random().Next(1, 10) } };
-int[,] matrix3 = new int[2, 2] { { 1, 2 }, { 3, 4 } };
-int[,] matrix4 = new int[2, 2] { { 5, 6 }, { 7, 8 } };
-
-void printMatrix(int[,] m)
+int[,,] createAndShowArray(int raw, int column, int depth)
 {
-    for (int i = 0; i < 2; i++)
+    int indexElement = 0;
+    int[,,] array = new int[raw, column, depth];
+    int[] knownElements = new int[raw * column * depth]; // Массив известных чисел
+    // Заполняем массив известных чисел 0
+    int m = 0;
+    while (m < raw * column * depth)
     {
-        for (int j = 0; j < 2; j++)
-        {
-            Console.Write($"{m[i,j]} ");
-        }
-        Console.WriteLine();
+        knownElements[m] = 0;
+        m++;
     }
-    Console.WriteLine();
-}
 
-int[,] productMaxtix(int[,] m1, int[,] m2)
-{
-    return new int[2, 2]
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
         {
-            {(m1[0,0] * m2[0,0] + m1[0,1] * m2[1,0]), (m1[0,0] * m2[0,1] + m1[0,1] * m2[1,1])},
-            {(m1[1,0] * m2[0,0] + m1[1,1] * m2[1,0]),(m1[1,0] * m2[0,1] + m1[1,1] * m2[1,1])}
-       };
+            for (int k = 0; k < array.GetLength(2); k++)
+            {
+                array[j, k, i] = new Random().Next(10, 40);
+                indexElement = 0;
+                // Сравниваем новый элемент с элементами массива известных чисел. Если необходимо: генерируем новое число и записываем его в массив известных чисел
+                while (indexElement < knownElements.Length)
+                {
+                    if (knownElements[indexElement] == array[j, k, i])
+                    {
+                        //Console.WriteLine($"!!!{array[j, k, i]}({j},{k},{i}) ");
+                        array[j, k, i] = new Random().Next(10, 40);
+                        indexElement = 0;
+                    }
+                    if (knownElements[indexElement] == 0)
+                    {
+                        knownElements[indexElement] = array[j, k, i];
+                        break;
+                    }
+                    indexElement++;
+                }
+                indexElement = 0;
+                Console.Write($"{array[j, k, i]}({j},{k},{i}) ");
+            }
+            Console.WriteLine();
+        }
+    }
+    return array;
 }
 
-
-printMatrix(matrix1);
-printMatrix(matrix2);
-printMatrix(productMaxtix(matrix1, matrix2));
-//printMatrix(productMaxtix(matrix3, matrix4));
+createAndShowArray(3, 3, 3);
